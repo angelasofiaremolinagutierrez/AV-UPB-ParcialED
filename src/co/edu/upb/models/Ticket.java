@@ -8,14 +8,14 @@ public class Ticket {
     public Pasajero pas;
     public int puesto;
     public int carga; //en kilogramos.
-    public String categoria;
+    public int categoria;//"1. Premium\n2. Ejecutiva\n3.Economica"
     public int precio;
 
     public Ticket(Pasajero pas) {
         this.pas = pas;
     }
 
-    public void comprar(Vuelo vuelo, Pasajero pas,  int puesto, int carga, String categoria) {
+    public void comprar(Vuelo vuelo, Pasajero pas, int carga, int categoria) {
         //asignar un idRegistro
 
         this.vuelo = vuelo;
@@ -24,6 +24,7 @@ public class Ticket {
         // al comprar uno el vuelo se debe modificar el numero de puestosDisponibles.
         this.carga = carga;
         this.categoria = categoria;
+        //asignar puesto segun lugares disponibles
         //asignar precio segun categoria
         //this.precio = precio;
     }
@@ -61,11 +62,11 @@ public class Ticket {
         this.puesto = puesto;
     }
 
-    public String getCategoria() {
+    public int getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(int categoria) {
         this.categoria = categoria;
     }
 
