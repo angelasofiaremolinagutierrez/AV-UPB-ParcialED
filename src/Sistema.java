@@ -30,11 +30,92 @@ public class Sistema{
         Scanner scan = new Scanner(System.in);
         String user = scan.nextLine();
         switch (user){
+            //todo poner un ciclo para que le permita hacer el check-in despues del registro
+            //  o permita el ingreso de un agente de abordaje
             case "1":{ //Sistema del pasajero
                 System.out.println("¿Qué desea hacer?\n1. Comprar un tiquete.\n2. Realizar su check-in.");
                 String accion = scan.nextLine();
                 switch (accion){
                     case "1":{ //comprar tiquete
+                        System.out.println("Antes de iniciar la compra por favor elija su tipo de documento (Escoja un numero)");
+                        System.out.println("1. CC\n2. CE \n3. Pasaporte");
+                        int tipo;
+                        while (true){
+                            tipo = Integer.parseInt(scan.nextLine());
+                            if(tipo==1 || tipo==2 || tipo==3){
+                                break;
+                            }else{
+                                System.out.println("Esa no es una opción, escriba una opción de las anteriores.");
+                            }
+                        }
+                        String tipoID = "";
+                        if(tipo == 1){
+                            tipoID = "CC";
+                        }else if(tipo == 2){
+                            tipoID = "CE";
+                        }else if(tipo == 3){
+                            tipoID = "Pasaporte";
+                        }
+                        System.out.println("Ingrese su numero de identificación");
+                        String id = scan.nextLine();
+
+                        //comprobar si ya está registrado
+                        DoubleListNode p = pasajeros.head;
+                        int contUser = 0;
+                        Pasajero pas = null;
+                        for (int i = 0; i < pasajeros.getSize(); i++) {
+                            pas = (Pasajero)p.getObject();
+                            if(pas.getNumeroID().equals(id) && pas.getTipoID().equals(tipoID)){
+                                break;
+                            }
+                            contUser++;
+                        }
+                        if(contUser == pasajeros.getSize()) {
+                            System.out.println("Parece que usted no se encuentra en el sistema.");
+                            System.out.println("¿Desea registrarse? (S/N)");
+                            String siOno = scan.nextLine().toUpperCase();
+
+                            switch (siOno) {
+                                case "S": {
+                                    //llamar a un metodo registrar con la cedula que ingresó.
+                                    pas = new Pasajero(id);
+                                    System.out.println("Para hacer el registro ingrese los siguientes datos");
+                                    System.out.println("Nombre:");
+                                    String nombre = scan.nextLine();
+                                    System.out.println("Apellido:");
+                                    String apellido = scan.nextLine();
+                                    System.out.println("Dirección:");
+                                    String direccion = scan.nextLine();
+                                    System.out.println("Telefono:");
+                                    String telefono = scan.nextLine();
+                                    System.out.println("Ahora ingrese los datos de un contacto de emergencia");
+                                    System.out.println("Nombre:");
+                                    String nombreSOS = scan.nextLine();
+                                    System.out.println("Apellido:");
+                                    String apellidoSOS = scan.nextLine();
+                                    System.out.println("Dirección:");
+                                    String direccionSOS = scan.nextLine();
+                                    System.out.println("Telefono:");
+                                    String telefonoSOS = scan.nextLine();
+
+                                    pas.registrarse(nombre, apellido, tipoID, id, direccion, telefono, nombreSOS, apellidoSOS, direccionSOS, telefonoSOS);
+                                    pasajeros.add(pas);
+
+                                    System.out.println("Registro exitoso :)");
+                                    break;
+                                }
+                                case "N": {
+                                    System.out.println("Sin registrarte no puedes comprar un ticket :(");
+                                    break;
+                                }
+                            }
+                            if(siOno.equals("N")){
+                                break;
+                            }
+                        }
+                        System.out.println("Bienvenid@ "+pas.getNombre());
+
+                        System.out.println("Ahora sí podemos proseguir con la compra");
 
                         System.out.println("Aquí están nuestros vuelos disponibles:");
                         DoubleListNode v = vuelos.head;
@@ -60,114 +141,25 @@ public class Sistema{
                             vueloInteres = (Vuelo) n.getObject();
                             n = n.next;
                         }
-                        System.out.println("¿Ya está registrado? (S/N)");
-                        //preguntar si ya está registrado (preguntar id y buscar)
-                        String siOno = scan.nextLine().toUpperCase();
-                        System.out.println("Elija el tipo de documento");
-                        System.out.println("1. CC\n2. CE \n3. Pasaporte");
-                        int tipo;
+
+                        Ticket ticket;
+                        System.out.println("¿En que categoría desea viajar?");
+                        System.out.println("1. Premium\n2. Ejecutiva\n3.Economica");
+                        int cat;
                         while (true){
-                            tipo = Integer.parseInt(scan.nextLine());
-                            if(tipo==1 || tipo==2 || tipo==3){
+                            cat = Integer.parseInt(scan.nextLine());
+                            if(cat==1 || cat==2 || cat==3){
                                 break;
                             }else{
                                 System.out.println("Esa no es una opción, escriba una opción de las anteriores.");
                             }
                         }
-                        String tipoID = "";
-                        if(tipo == 1){
-                            tipoID = "CC";
-                        }else if(tipo == 2){
-                            tipoID = "CE";
-                        }else if(tipo == 3){
-                            tipoID = "Pasaporte";
-                        }
-                        System.out.println("Ingrese su numero de identificación");
-                        String id = scan.nextLine();
-                        Ticket ticket;
-                        switch (siOno){
-                            case "S":{
-                                DoubleListNode p = pasajeros.head;
-                                int contUser = 0;
-                                for (int i = 0; i < pasajeros.getSize(); i++) {
-                                    Pasajero pas = (Pasajero)p.getObject();
-                                    if(pas.getNumeroID().equals(id) && pas.getTipoID().equals(tipoID)){
-                                        System.out.println("¿En que categoría desea viajar?");
-                                        System.out.println("1. Premium\n2. Ejecutiva\n3.Economica");
-                                        int cat;
-                                        while (true){
-                                            cat = Integer.parseInt(scan.nextLine());
-                                            if(cat==1 || cat==2 || cat==3){
-                                                break;
-                                            }else{
-                                                System.out.println("Esa no es una opción, escriba una opción de las anteriores.");
-                                            }
-                                        }
-                                        System.out.println("¿Cuanto peso lleva en su maleta? (en Kilogramos)");
-                                        int carga = Integer.parseInt(scan.nextLine());
+                        System.out.println("¿Cuanto peso lleva en su maleta? (en Kilogramos)");
+                        int carga = Integer.parseInt(scan.nextLine());
 
-                                        ticket = new Ticket(pas);
-                                        ticket.comprar(vueloInteres,pas,carga,cat);
-                                        System.out.println("Gracias por la compra :D");
-                                        break;
-                                    }
-                                    contUser++;
-                                }
-                                if(contUser == pasajeros.getSize()){
-                                    System.out.println("Parece que usted no se encuentra en el sistema.\nRevise si escribió bien su numero de documento");
-                                }
-                                break;
-                            }
-                            case "N":{
-                                //si no está registrado, primero:
-                                //llamar a un metodo registrar con la cedula que ingresó.
-                                Pasajero pas = new Pasajero(id);
-                                System.out.println("Para hacer el registro ingrese los siguientes datos");
-                                System.out.println("Nombre:");
-                                String nombre = scan.nextLine();
-                                System.out.println("Apellido:");
-                                String apellido = scan.nextLine();
-                                System.out.println("Dirección:");
-                                String direccion = scan.nextLine();
-                                System.out.println("Telefono:");
-                                String telefono = scan.nextLine();
-                                System.out.println("Ahora ingrese los datos de un contacto de emergencia");
-                                System.out.println("Nombre:");
-                                String nombreSOS = scan.nextLine();
-                                System.out.println("Apellido:");
-                                String apellidoSOS = scan.nextLine();
-                                System.out.println("Dirección:");
-                                String direccionSOS = scan.nextLine();
-                                System.out.println("Telefono:");
-                                String telefonoSOS = scan.nextLine();
-
-                                pas.registrarse(nombre, apellido, tipoID,id,direccion,telefono,nombreSOS,apellidoSOS,direccionSOS,telefonoSOS);
-                                pasajeros.add(pas);
-
-                                System.out.println("Ya realizamos su registro :)");
-                                System.out.println("Ahora sí podemos proseguir con la compra:");
-
-                                System.out.println("¿En que categoría desea viajar?");
-                                System.out.println("1. Premium\n2. Ejecutiva\n3.Economica");
-                                int cat;
-                                while (true){
-                                    cat = Integer.parseInt(scan.nextLine());
-                                    if(cat==1 || cat==2 || cat==3){
-                                        break;
-                                    }else{
-                                        System.out.println("Esa no es una opción, escriba una opción de las anteriores.");
-                                    }
-                                }
-                                System.out.println("¿Cuanto peso lleva en su maleta? (en Kilogramos)");
-                                int carga = Integer.parseInt(scan.nextLine());
-
-                                ticket = new Ticket(pas);
-                                ticket.comprar(vueloInteres,pas,carga,cat);
-                                System.out.println("Gracias por la compra :D");
-                                break;
-                            }
-                        }
-
+                        ticket = new Ticket(pas);
+                        ticket.comprar(vueloInteres,pas,carga,cat);
+                        System.out.println("Gracias por la compra :D");
                         break;
                     }
                     case "2":{ //check-in
