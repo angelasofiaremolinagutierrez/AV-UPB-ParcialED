@@ -5,7 +5,7 @@ public class Pasajero {
     public String nombre;
     public String apellido;
     public String tipoID;
-    public int numeroID;
+    public String numeroID;
     public String direccion;
     public String telefono;
 
@@ -18,11 +18,11 @@ public class Pasajero {
 
     }
 
-    public Pasajero(int numeroID) {
+    public Pasajero(String numeroID) {
         this.numeroID = numeroID;
     }
 
-    public void registrarse(String nombre, String apellido, String tipoID, int numeroID, String direccion, String telefono, String nombreContactoSOS, String apellidoContactoSOS, String direccionContactoSOS, String telefonoContactoSOS) {
+    public void registrarse(String nombre, String apellido, String tipoID, String numeroID, String direccion, String telefono, String nombreContactoSOS, String apellidoContactoSOS, String direccionContactoSOS, String telefonoContactoSOS) {
         //Asignar un id de pasajero y mostrar.
         this.nombre = nombre;
         this.apellido = apellido;
@@ -71,11 +71,11 @@ public class Pasajero {
         this.tipoID = tipoID;
     }
 
-    public int getNumeroID() {
+    public String getNumeroID() {
         return numeroID;
     }
 
-    public void setNumeroID(int numeroID) {
+    public void setNumeroID(String numeroID) {
         this.numeroID = numeroID;
     }
 
