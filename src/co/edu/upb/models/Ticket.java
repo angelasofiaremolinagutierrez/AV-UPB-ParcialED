@@ -19,17 +19,13 @@ public class Ticket {
 
         //asignar un idRegistro
         idRegistro +=1;
-        System.out.println("Su registro es el número: "+ this.idRegistro);
         this.vuelo = vuelo;
-        System.out.println("Su vuelo es: " +this.vuelo.toString());
         this.pas = pas;
         // al comprar un vuelo se debe asignar puesto segun lugares disponibles
         // y modificar el numero de puestosDisponibles
-        System.out.println("Su silla es la número: "+vuelo.getPuestosDisponibles());
         this.vuelo.setPuestosDisponibles(vuelo.getPuestosDisponibles()-1);
         this.carga = carga;
         this.categoria = categoria;
-
         //asignar precio segun categoria
         if(categoria == 1){
             this.precio = 7000000;
@@ -38,7 +34,12 @@ public class Ticket {
         }else if(categoria == 3){
             this.precio = 120000;
         }
+
+        System.out.println("Su registro es el número: "+ this.idRegistro);
+        System.out.println("Su vuelo es: " +this.vuelo.toString());
+        System.out.println("Su silla es la número: "+((int)vuelo.getPuestosDisponibles()+1));
         System.out.println("Según la categoría escogida, el precio de su ticket es de: "+this.precio);
+
     }
 
     public boolean checkIn(int idRegistro){

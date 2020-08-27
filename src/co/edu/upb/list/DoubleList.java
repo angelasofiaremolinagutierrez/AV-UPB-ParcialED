@@ -34,7 +34,7 @@ public class DoubleList implements DoubleListInterface, Iterable<DoubleListNode>
     }
 
     @Override
-    public void clear() { //todo preguntar por este metodo
+    public void clear() {
         head = null;
         tail = null;
         size = 0;

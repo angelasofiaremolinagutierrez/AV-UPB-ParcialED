@@ -122,7 +122,6 @@ public class Sistema{
                         for (int i = 0; i < vuelos.getSize(); i++) {
                             System.out.println((i+1)+". "+vuelos.get(v).toString());
                             v = v.next;
-                            //todo imprimir los vuelos con su disponibilidad
                         }
                         System.out.println("¿Cuál vuelo quiere comprar?");
                         int vNum;
@@ -144,7 +143,7 @@ public class Sistema{
 
                         Ticket ticket;
                         System.out.println("¿En que categoría desea viajar?");
-                        System.out.println("1. Premium\n2. Ejecutiva\n3.Economica");
+                        System.out.println("1. Premium\n2. Ejecutiva\n3. Economica");
                         int cat;
                         while (true){
                             cat = Integer.parseInt(scan.nextLine());
