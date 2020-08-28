@@ -13,12 +13,11 @@ public class Ticket {
 
     public Ticket(Pasajero pas) {
         this.pas = pas;
+        //asignar un idRegistro
     }
 
     public void comprar(Vuelo vuelo, Pasajero pas, int carga, int categoria) {
-
-        //asignar un idRegistro
-        idRegistro +=1;
+        this.idRegistro = 133 - (vuelo.getPuestosDisponibles() - 1);
         this.vuelo = vuelo;
         this.pas = pas;
         // al comprar un vuelo se debe asignar puesto segun lugares disponibles
@@ -39,6 +38,7 @@ public class Ticket {
         System.out.println("Su vuelo es: " +this.vuelo.toString());
         System.out.println("Su silla es la número: "+((int)vuelo.getPuestosDisponibles()+1));
         System.out.println("Según la categoría escogida, el precio de su ticket es de: "+this.precio);
+        System.out.println("El id del Avion es: " + this.getVuelo().idAvion);
 
     }
 

@@ -3,7 +3,7 @@ package co.edu.upb.models;
 import java.util.Calendar;
 
 public class Vuelo {
-    public int idAvion = 0;
+    public int idAvion=0;
     public String ciudadSalida;
     public String ciudadLlegada;
     public Calendar horaSalida;
@@ -16,14 +16,7 @@ public class Vuelo {
         this.ciudadLlegada = ciudadLlegada;
         this.horaSalida = horaSalida;
         this.horaLlegada = horaLlegada;
-        // asignar avion
-        this.idAvion = getIdAvion();
-        if(this.checkearAvionesDisponibles()){
-            idAvion += 1;
-        }else{
-            System.out.println("NO HAY MAS AVIONES");
-            idAvion = -1;
-        }
+        // asignar avion en la creacion del vuelo
 
     }
 

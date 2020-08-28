@@ -21,12 +21,17 @@ public class Sistema{
         //creando algunos vuelos
         DoubleList vuelos = new DoubleList();
         Vuelo v1 = new Vuelo("Bucaramanga","Cucuta",new GregorianCalendar(2020, Calendar.AUGUST, 31, 23, 11, 44) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 1, 0, 0, 0));
-        Vuelo v2 = new Vuelo("Bucaramanga","Bogotá",new GregorianCalendar(2020, Calendar.AUGUST, 27, 23, 6, 44) ,new GregorianCalendar(2020, Calendar.AUGUST, 24, 23, 59, 59));
+        Vuelo v2 = new Vuelo("Bucaramanga","Bogotá",new GregorianCalendar(2020, Calendar.AUGUST, 27, 23, 39, 44) ,new GregorianCalendar(2020, Calendar.AUGUST, 24, 23, 59, 59));
+        v1.setIdAvion(1);
+        v2.setIdAvion(2);
         vuelos.add(v1);
         vuelos.add(v2);
 
         //tickets comprados
         DoubleList tickets = new DoubleList();
+        Ticket prueba = new Ticket(pas1);
+        prueba.comprar(v1,pas1,58,3);
+        tickets.add(prueba);
 
         //INICIO DEL PROGRAMA
         System.out.println("Bienvenido a la aerolinea AV-UPB!");
@@ -169,6 +174,8 @@ public class Sistema{
                             break;
                         }
                         case "2":{ //check-in
+                            System.out.println("Ingrese el id de su avión");
+                            int idAvion = Integer.parseInt(scan.nextLine());
                             System.out.println("Ingrese el id de registro de su ticket");
                             int idRegistro = Integer.parseInt(scan.nextLine());
 
@@ -177,9 +184,10 @@ public class Sistema{
                             Ticket tic = null;
                             for (int i = 0; i < tickets.getSize(); i++) {
                                 tic = (Ticket) t.getObject();
-                                if (tic.getIdRegistro() == idRegistro) {
+                                if ((tic.getIdRegistro() == idRegistro) && (tic.getVuelo().getIdAvion() == idAvion)) {
                                     break;
                                 }
+                                t = t.next;
                                 contTickets++;
                             }
 
@@ -189,15 +197,16 @@ public class Sistema{
                                 Calendar rn = Calendar.getInstance();
                                 long mins = (tic.getVuelo().getHoraSalida().getTimeInMillis() - rn.getTimeInMillis())/60000;
                                 if(mins<30){
-                                    System.out.println("Lo siento, ya no puedes realizar el check-in");
+                                    System.out.println("Lo siento, ya no puedes realizar el check-in, abordamos en: "+mins+" minutos.");
                                 }else{
                                     boolean flag2 = true;
                                     while(flag2){
                                         System.out.println("¿Quiere modificar alguna de esta información?");
-                                        System.out.println("Escriba: 1. nombre\n2. apellido\n3. direccion\n4. telefono\n"+
-                                                "5. nombre contacto emergencias\n6. apellido contacto emergencia\n" +
-                                                "7. direccion contacto emergencias\n8. telefono emergencias\n +" +
-                                                "9. Cambiar el peso de la maleta\n10. Guardar y salir.");
+                                        System.out.println("Escriba el numero para modificar:\n1. nombre\n2. apellido\n" +
+                                                "3. direccion\n4. telefono\n"+ "5. nombre contacto emergencias\n" +
+                                                "6. apellido contacto emergencia\n" + "7. direccion contacto emergencias\n" +
+                                                "8. telefono emergencias\n" + "9. Cambiar el peso de la maleta\n" +
+                                                "10. Guardar y salir.");
                                         int mod = Integer.parseInt(scan.nextLine());
                                         switch (mod){
                                             case 1:{
@@ -241,10 +250,16 @@ public class Sistema{
                                                 break;
                                             }
                                             case 9:{
+                                                System.out.println("Ingrese el peso actual de su maleta");
+                                                tic.setCarga(Integer.parseInt(scan.nextLine()));
+                                                break;
+                                            }
+                                            case 10:{
                                                 System.out.println("Información guardada");
                                                 flag2 = false;
                                             }
                                         }
+                                        System.out.println("Tu información fue cambiada exitosamente.");
                                         if(tic.getCarga()>52){
                                             System.out.println("Tu maleta es muy pesada, no puedes ingresar así, sacale peso antes de abordar");
                                         }
