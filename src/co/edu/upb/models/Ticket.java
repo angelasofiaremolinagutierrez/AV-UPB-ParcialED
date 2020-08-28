@@ -34,19 +34,13 @@ public class Ticket {
         }else if(categoria == 3){
             this.precio = 120000;
         }
-
-        System.out.println("Su registro es el número: "+ this.idRegistro);
+        System.out.println("A continuación le daremos la información de su tiquete de vuelo, guardela bien para el check-in");
+        System.out.println("Su id de registro es el número: "+ this.idRegistro);
         System.out.println("Su vuelo es: " +this.vuelo.toString());
         System.out.println("Su silla es la número: "+((int)vuelo.getPuestosDisponibles()+1));
         System.out.println("Según la categoría escogida, el precio de su ticket es de: "+this.precio);
 
     }
-
-    public boolean checkIn(int idRegistro){
-        //COMPROBAR LA HORA ACTUAL CON LA HORA DEL VUELO SI QUEDAN MAS DE 30 MINUTOS T, ELSE F
-        return true;
-    }
-
 
 
     //getters & setters
@@ -87,4 +81,23 @@ public class Ticket {
         return precio;
     }
 
+    public Vuelo getVuelo() {
+        return vuelo;
+    }
+
+    public void setVuelo(Vuelo vuelo) {
+        this.vuelo = vuelo;
+    }
+
+    public int getCarga() {
+        return carga;
+    }
+
+    public void setCarga(int carga) {
+        this.carga = carga;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
 }

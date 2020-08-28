@@ -16,7 +16,7 @@ public class Vuelo {
         this.ciudadLlegada = ciudadLlegada;
         this.horaSalida = horaSalida;
         this.horaLlegada = horaLlegada;
-        //asignar avion
+        // asignar avion
         this.idAvion = getIdAvion();
         if(this.checkearAvionesDisponibles()){
             idAvion += 1;
