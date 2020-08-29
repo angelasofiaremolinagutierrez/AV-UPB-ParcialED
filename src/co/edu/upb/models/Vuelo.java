@@ -1,5 +1,7 @@
 package co.edu.upb.models;
 
+import co.edu.upb.list.DoubleList;
+
 import java.util.Calendar;
 
 public class Vuelo {
@@ -9,6 +11,8 @@ public class Vuelo {
     public Calendar horaSalida;
     public Calendar horaLlegada;
     public int puestosDisponibles; //133
+
+    public DoubleList pasajeros;
 
     public Vuelo(String ciudadSalida, String ciudadLlegada, Calendar horaSalida, Calendar horaLlegada) {
         this.puestosDisponibles = 133;
@@ -87,5 +91,11 @@ public class Vuelo {
         this.puestosDisponibles = puestosDisponibles;
     }
 
+    public DoubleList getPasajeros() {
+        return pasajeros;
+    }
 
+    public void setPasajeros(DoubleList pasajeros) {
+        this.pasajeros = pasajeros;
+    }
 }

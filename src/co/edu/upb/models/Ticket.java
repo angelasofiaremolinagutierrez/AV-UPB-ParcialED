@@ -42,6 +42,9 @@ public class Ticket {
 
         //agregar el vuelo a la lista de vuelos del pasajero
         this.pas.getVuelos().add(this.vuelo);
+
+        //agregar el pasajero a la lista de pasajeros del vuelo
+        this.vuelo.getPasajeros().add(this.pas);
     }
 
 

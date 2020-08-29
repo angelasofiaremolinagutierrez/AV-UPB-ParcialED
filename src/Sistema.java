@@ -288,7 +288,7 @@ public class Sistema{
                 }
                 case "2":{ //Sistema del agente de abordaje
                     System.out.println("¿Qué desea hacer?");
-                    System.out.println("1. Consultar la lista de pasajeros\n2. Crear reportes de los pasajeros");
+                    System.out.println("1. Consultar la lista de pasajeros\n2. Crear reportes de los vuelos con información de cada pasajero");
                     String op = scan.nextLine();
                     switch (op){
                         case "1":{
@@ -300,11 +300,10 @@ public class Sistema{
                             }
                             break;
                         }
-                        case "2":{//El reporte debe contemplar la carga asociada a cada uno de ellos y los costos detallados y totales del vuelo.
+                        case "2":{//El reporte debe contemplar la carga asociada a cada pasajero y los costos detallados y totales del vuelo.
                             System.out.println("Reportes ordenados por: \n" +
                                     "1. Nombre\n2. Apellido\n3. ID Avión");
-
-
+                            
                             break;
                         }
                     }
