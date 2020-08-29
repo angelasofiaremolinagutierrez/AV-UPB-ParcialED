@@ -15,11 +15,13 @@ public class Sistema{
         //creando algunos pasajeros
         DoubleList pasajeros = new DoubleList();
         Pasajero pas1 = new Pasajero("1193560933");
+        pas1.setIdPasajero(pasajeros.getSize()+1);
         pas1.registrarse("Angela","Remolina","CC", pas1.numeroID, "Cra.15","3188334099","Maria","Remolina","Calle 12","3188334095");
         pasajeros.add(pas1);
 
         //creando algunos vuelos
         DoubleList vuelos = new DoubleList();
+        //todo crear vuelos reales
         Vuelo v1 = new Vuelo("Bucaramanga","Cucuta",new GregorianCalendar(2020, Calendar.AUGUST, 31, 23, 11, 44) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 1, 0, 0, 0));
         Vuelo v2 = new Vuelo("Bucaramanga","Bogotá",new GregorianCalendar(2020, Calendar.AUGUST, 27, 23, 39, 44) ,new GregorianCalendar(2020, Calendar.AUGUST, 24, 23, 59, 59));
         v1.setIdAvion(1);
@@ -90,6 +92,7 @@ public class Sistema{
                                     case "S": {
                                         //llamar a un metodo registrar con la cedula que ingresó.
                                         pas = new Pasajero(id);
+                                        pas.setIdPasajero(pasajeros.getSize()+1);
                                         System.out.println("Para hacer el registro ingrese los siguientes datos");
                                         System.out.println("Nombre:");
                                         String nombre = scan.nextLine();
@@ -132,6 +135,7 @@ public class Sistema{
                             DoubleListNode v = vuelos.head;
                             for (int i = 0; i < vuelos.getSize(); i++) {
                                 System.out.println((i+1)+". "+vuelos.get(v).toString());
+                                System.out.println("Disponibilidad: "+ ((Vuelo)vuelos.get(v)).getPuestosDisponibles());
                                 v = v.next;
                             }
                             System.out.println("¿Cuál vuelo quiere comprar?");
@@ -279,6 +283,7 @@ public class Sistema{
                              */
                         }
                     }
+                    System.out.println("\n");
                     break;
                 }
                 case "2":{ //Sistema del agente de abordaje
@@ -287,25 +292,34 @@ public class Sistema{
                     String op = scan.nextLine();
                     switch (op){
                         case "1":{
-
+                            DoubleListNode n = pasajeros.head;
+                            for (int i = 0; i < pasajeros.getSize(); i++) {
+                                System.out.println("------------PASAJERO "+(i+1)+"-------------");
+                                System.out.println(((Pasajero)n.getObject()).toString());
+                                n = n.next;
+                            }
                             break;
                         }
-                        case "2":{
+                        case "2":{//El reporte debe contemplar la carga asociada a cada uno de ellos y los costos detallados y totales del vuelo.
                             System.out.println("Reportes ordenados por: \n" +
                                     "1. Nombre\n2. Apellido\n3. ID Avión");
 
-                            //El reporte debe contemplar la carga asociada a cada uno de ellos y los costos detallados y totales del vuelo.
+
                             break;
                         }
                     }
+                    System.out.println("\n");
                     break;
                 }
                 case "3":{
+                    System.out.println("Gracias por usar el sistema :)");
                     flag1 = false;
+                    System.out.println("\n");
                     break;
                 }
                 default:{
                     System.out.println("Esa no es una opción intentelo de nuevo");
+                    System.out.println("\n");
                 }
             }
         }

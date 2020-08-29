@@ -34,7 +34,7 @@ public class Vuelo {
                 ", Llegada='" + ciudadLlegada + '\'' +
                 ", horaSalida=" + horaSalida.getTime() +
                 ", horaLlegada=" + horaLlegada.getTime() +
-                ", puestos disponibles="+ puestosDisponibles;
+                ", ID Avion=" + idAvion;
     }
 
     //getters y setters

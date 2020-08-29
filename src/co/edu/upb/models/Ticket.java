@@ -34,7 +34,7 @@ public class Ticket {
             this.precio = 120000;
         }
         System.out.println("A continuación le daremos la información de su tiquete de vuelo, guardela bien para el check-in");
-        System.out.println("Su id de registro es el número: "+ this.idRegistro);
+        System.out.println("Su id de registro de ticket es el número: "+ this.idRegistro);
         System.out.println("Su vuelo es: " +this.vuelo.toString());
         System.out.println("Su silla es la número: "+((int)vuelo.getPuestosDisponibles()+1));
         System.out.println("Según la categoría escogida, el precio de su ticket es de: "+this.precio);
