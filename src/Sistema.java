@@ -267,14 +267,37 @@ public class Sistema{
                                 }
                                 break;
                             }
+
+                            /*todo
+                             vuelo 1 y vuelo 2, si antes de abordar el vuelo 1 su ocupación es del 50%
+                             y el siguiente vuelo 2 es del 50%, se deberá reasignar todos los pasajeros
+                             en el vuelo 2 (cualquier parecido con la realidad es pura coincidencia).
+                             Tenga en cuenta que, si un puesto esta ocupado deberá asignarle el siguiente,
+                             si esta ocupado deberá asignar el siguiente, hasta que encuentre uno libre.
+                             En caso de llegar al final de los puestos, deberá ir al primer asiento de su
+                             categoría para continuar con la búsqueda de puesto.
+                             */
                         }
                     }
                     break;
                 }
                 case "2":{ //Sistema del agente de abordaje
-                    //preguntar que quiere ver y dependiendo de eso
-                    //Consultarpasajeros
-                    //mostrarVuelos
+                    System.out.println("¿Qué desea hacer?");
+                    System.out.println("1. Consultar la lista de pasajeros\n2. Crear reportes de los pasajeros");
+                    String op = scan.nextLine();
+                    switch (op){
+                        case "1":{
+
+                            break;
+                        }
+                        case "2":{
+                            System.out.println("Reportes ordenados por: \n" +
+                                    "1. Nombre\n2. Apellido\n3. ID Avión");
+
+                            //El reporte debe contemplar la carga asociada a cada uno de ellos y los costos detallados y totales del vuelo.
+                            break;
+                        }
+                    }
                     break;
                 }
                 case "3":{
@@ -287,15 +310,5 @@ public class Sistema{
             }
         }
 
-    }
-
-    public static String mostrarVuelos() {
-        return null;
-    }
-
-
-
-    public static Pasajero consultarPasajero() {
-        return null;
     }
 }

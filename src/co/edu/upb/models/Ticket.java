@@ -40,6 +40,8 @@ public class Ticket {
         System.out.println("Según la categoría escogida, el precio de su ticket es de: "+this.precio);
         System.out.println("El id del Avion es: " + this.getVuelo().idAvion);
 
+        //agregar el vuelo a la lista de vuelos del pasajero
+        this.pas.getVuelos().add(this.vuelo);
     }
 
 

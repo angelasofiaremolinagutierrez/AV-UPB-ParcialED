@@ -30,8 +30,8 @@ public class Vuelo {
     @Override
     public String toString() {
         return
-                "ciudadSalida='" + ciudadSalida + '\'' +
-                ", ciudadLlegada='" + ciudadLlegada + '\'' +
+                "Salida='" + ciudadSalida + '\'' +
+                ", Llegada='" + ciudadLlegada + '\'' +
                 ", horaSalida=" + horaSalida.getTime() +
                 ", horaLlegada=" + horaLlegada.getTime() +
                 ", puestos disponibles="+ puestosDisponibles;

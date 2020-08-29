@@ -1,5 +1,8 @@
 package co.edu.upb.models;
 
+import co.edu.upb.list.DoubleList;
+import co.edu.upb.list.DoubleListNode;
+
 public class Pasajero {
     public int idPasajero;
     public String nombre;
@@ -13,6 +16,8 @@ public class Pasajero {
     public String apellidoContactoSOS;
     public String direccionContactoSOS;
     public String telefonoContactoSOS;
+
+    public DoubleList vuelos = new DoubleList();
 
     public Pasajero() {
 
@@ -36,6 +41,31 @@ public class Pasajero {
         this.telefonoContactoSOS = telefonoContactoSOS;
     }
 
+    @Override
+    public String toString() {
+        String listaVuelos = "{";
+        DoubleListNode n = vuelos.head;
+        for (int i = 0; i < vuelos.getSize(); i++) {
+            listaVuelos +="Vuelo ";
+            listaVuelos += (i+1);
+            listaVuelos += ": " +n.getObject() +"\n";
+            n = n.next;
+        }
+        listaVuelos += "}";
+        return "Pasajero:\n" +
+                "id pasajero=" + idPasajero +
+                ", \nNombre='" + nombre + '\'' +
+                ", \nApellido='" + apellido + '\'' +
+                ", \nTipoID='" + tipoID + '\'' +
+                ", \nNumeroID='" + numeroID + '\'' +
+                ", \nDireccion='" + direccion + '\'' +
+                ", \nTelefono='" + telefono + '\'' +
+                ", \nNombreContactoSOS='" + nombreContactoSOS + '\'' +
+                ", \nApellidoContactoSOS='" + apellidoContactoSOS + '\'' +
+                ", \nDireccionContactoSOS='" + direccionContactoSOS + '\'' +
+                ", \nTelefonoContactoSOS='" + telefonoContactoSOS + '\'' +
+                ",\nLista vuelos: \n" + listaVuelos;
+    }
 
     //getters & setters
 
@@ -125,5 +155,13 @@ public class Pasajero {
 
     public void setTelefonoContactoSOS(String telefonoContactoSOS) {
         this.telefonoContactoSOS = telefonoContactoSOS;
+    }
+
+    public DoubleList getVuelos() {
+        return vuelos;
+    }
+
+    public void setVuelos(DoubleList vuelos) {
+        this.vuelos = vuelos;
     }
 }
