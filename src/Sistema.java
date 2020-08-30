@@ -27,8 +27,8 @@ public class Sistema{
         //creando algunos vuelos
         DoubleList vuelos = new DoubleList();
         //todo crear vuelos reales
-        Vuelo v1 = new Vuelo("Bucaramanga","Cucuta",new GregorianCalendar(2020, Calendar.AUGUST, 31, 23, 11, 44) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 1, 0, 0, 0));
-        Vuelo v2 = new Vuelo("Bucaramanga","Bogotá",new GregorianCalendar(2020, Calendar.AUGUST, 27, 23, 39, 44) ,new GregorianCalendar(2020, Calendar.AUGUST, 24, 23, 59, 59));
+        Vuelo v1 = new Vuelo("Bucaramanga","Bogotá",new GregorianCalendar(2020, Calendar.AUGUST, 30, 15, 59, 44) ,new GregorianCalendar(2020, Calendar.AUGUST, 30, 16, 40, 59));
+        Vuelo v2 = new Vuelo("Bucaramanga","Cucuta",new GregorianCalendar(2020, Calendar.AUGUST, 31, 23, 11, 44) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 1, 0, 0, 0));
         v1.setIdAvion(1);
         v2.setIdAvion(2);
         vuelos.add(v1);
@@ -370,21 +370,26 @@ public class Sistema{
                         }
                         case "3":{
                             //Los vuelos están ordenados por hora de salida
+                            System.out.println("Ingrese el ID del avión del vuelo que quiere reasignar");
+                            int idAReasignar = Integer.parseInt(scan.nextLine());
                             DoubleListNode v = vuelos.head;
-                            int cont = 0;
-                            for (int i = 0; i < vuelos.getSize(); i++) {
-                                System.out.println("Vuelo "+(i+1)+":\n");
-                                Calendar rn = Calendar.getInstance();
-                                Vuelo vuelo = (Vuelo)v.getObject();
-                                long minsParaSalida = (vuelo.getHoraSalida().getTimeInMillis() - rn.getTimeInMillis())/60000;
-                                long minsParaLlegada = (vuelo.getHoraLlegada().getTimeInMillis() - rn.getTimeInMillis())/60000;
+                            for (int i = 0; i < idAReasignar; i++) { //encontrar el vuelo con el id que ingresó
+                                v = v.next;
+                            }
 
-                                //System.out.println("mins Salida: "+minsParaSalida);
-                                //System.out.println("mins llegada: "+minsParaLlegada);
+                            Calendar rn = Calendar.getInstance();
+                            Vuelo vuelo = (Vuelo)v.getObject();
+                            long minsParaSalida = (vuelo.getHoraSalida().getTimeInMillis() - rn.getTimeInMillis())/60000;
+                            long minsParaLlegada = (vuelo.getHoraLlegada().getTimeInMillis() - rn.getTimeInMillis())/60000;
 
-                                if(minsParaSalida<30 && minsParaSalida>=0){
-                                    //hacer el resto aqui
-                                    /*todo
+                            //System.out.println("mins Salida: "+minsParaSalida);
+                            //System.out.println("mins llegada: "+minsParaLlegada);
+
+                            if(minsParaSalida<30 && minsParaSalida>=0){
+                                int numPasajerosVuelo = 133-vuelo.getPuestosDisponibles();
+                                if(numPasajerosVuelo <= 67){ // si la ocupación es del 50% o menos
+                                    // TODO: Checkear que el vuelo siguiente sea para el mismo destino xd luego los manda para otra parte
+                                    /*
                                      vuelo 1 y vuelo 2, si antes de abordar el vuelo 1 su ocupación es del 50%
                                      y el siguiente vuelo 2 es del 50%, se deberá reasignar todos los pasajeros
                                      en el vuelo 2 (cualquier parecido con la realidad es pura coincidencia).
@@ -393,13 +398,21 @@ public class Sistema{
                                      En caso de llegar al final de los puestos, deberá ir al primer asiento de su
                                      categoría para continuar con la búsqueda de puesto.
                                      */
-                                }else if(minsParaLlegada <=0){
-                                    System.out.println("Este vuelo ya cerró. Ya llegó a su destino.");
+                                    Vuelo siguienteVuelo = ((Vuelo)v.next.getObject());
+                                    if(siguienteVuelo.getPuestosDisponibles() >= numPasajerosVuelo){//si el vuelo siguiente tiene los puestos disponibles para ingresar a los pasajeros de este
+                                        System.out.println("Avise a los pasajeros de este vuelo que serán reasignados");
+                                        //todo reasignar pasajeros
+                                    }else{
+                                        System.out.println("Los pasajeros no caben en el siguiente vuelo, éste deberá salir así");
+                                    }
                                 }else{
-                                    System.out.println("Faltan más de 30 minutos para el abordaje, aun no se puede hacer esta comprobación");
+                                    System.out.println("Este avión está ocupado a más de 50%");
+                                    System.out.println("Ya puede salir.");
                                 }
-                                System.out.println("------------------------");
-                                v = v.next;
+                            }else if(minsParaLlegada <=0){
+                                System.out.println("Este vuelo ya cerró. Ya llegó a su destino.");
+                            }else{
+                                System.out.println("Faltan más de 30 minutos para el abordaje, aun no se puede hacer esta comprobación ya que no todos los pasajeros han hecho su check-in.");
                             }
                         }
                     }
