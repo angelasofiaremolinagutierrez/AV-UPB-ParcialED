@@ -43,7 +43,7 @@ public class Pasajero {
 
     @Override
     public String toString() {
-        String listaVuelos = "{";
+        String listaVuelos = "{\n";
         DoubleListNode n = vuelos.head;
         for (int i = 0; i < vuelos.getSize(); i++) {
             listaVuelos +="Vuelo ";

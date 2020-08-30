@@ -271,16 +271,6 @@ public class Sistema{
                                 }
                                 break;
                             }
-
-                            /*todo
-                             vuelo 1 y vuelo 2, si antes de abordar el vuelo 1 su ocupación es del 50%
-                             y el siguiente vuelo 2 es del 50%, se deberá reasignar todos los pasajeros
-                             en el vuelo 2 (cualquier parecido con la realidad es pura coincidencia).
-                             Tenga en cuenta que, si un puesto esta ocupado deberá asignarle el siguiente,
-                             si esta ocupado deberá asignar el siguiente, hasta que encuentre uno libre.
-                             En caso de llegar al final de los puestos, deberá ir al primer asiento de su
-                             categoría para continuar con la búsqueda de puesto.
-                             */
                         }
                     }
                     System.out.println("\n");
@@ -288,7 +278,8 @@ public class Sistema{
                 }
                 case "2":{ //Sistema del agente de abordaje
                     System.out.println("¿Qué desea hacer?");
-                    System.out.println("1. Consultar la lista de pasajeros\n2. Crear reportes de los vuelos con información de cada pasajero");
+                    System.out.println("1. Consultar la lista de pasajeros\n2. Crear reportes de los vuelos con información de cada pasajero" +
+                            "\n3. Reasignar vuelo si el 50% no abordó.");
                     String op = scan.nextLine();
                     switch (op){
                         case "1":{
@@ -301,10 +292,74 @@ public class Sistema{
                             break;
                         }
                         case "2":{//El reporte debe contemplar la carga asociada a cada pasajero y los costos detallados y totales del vuelo.
-                            System.out.println("Reportes ordenados por: \n" +
-                                    "1. Nombre\n2. Apellido\n3. ID Avión");
-                            
+                            System.out.println("Reportes ordenados por: \n" + "1. Nombre\n2. Apellido\n3. ID Avión");
+                            String rep = scan.nextLine();
+                            //Sin importar que, los vuelos se imprimirán  ordendados por id del avión (opción default)
+                            DoubleListNode n = vuelos.head;
+                            for (int i = 0; i < vuelos.getSize(); i++) {
+                                System.out.println("------------VUELO " + (i + 1) + "-------------");
+                                System.out.println("Información del vuelo:");
+                                System.out.println(((Vuelo) n.getObject()).toString());
+                                DoubleList ticketsVuelo = ((Vuelo) n.getObject()).getTickets();
+                                System.out.println("\nPasajeros:");
+
+                                DoubleList porNombre = new DoubleList();
+                                DoubleList porApellido = new DoubleList();
+                                DoubleListNode t = ticketsVuelo.head;
+                                for (int j = 0; j < ticketsVuelo.getSize(); j++) {
+                                    Ticket ticketActual = (Ticket)t.getObject();
+                                    if(rep.equals("3")){
+                                        System.out.println(ticketActual.getPas().toString());
+                                        System.out.println("La carga de este pasajero es de: "+ ticketActual.getCarga()+"kg\n");
+                                    }else if(rep.equals("2")){
+                                        porApellido.add(ticketActual.getPas().getApellido());
+                                    }else if(rep.equals("1")){
+                                        porNombre.add(ticketActual.getPas().getNombre());
+                                    }
+
+                                    t = t.next;
+                                }
+                                if(rep.equals("1")){
+                                    porNombre = porNombre.sortList();
+                                    DoubleListNode pn = porNombre.head;
+                                    for (int j = 0; j < porNombre.getSize(); j++) {
+                                        String nombreActual = (String) pn.getObject();
+                                        //todo fix recorra ticketsVuelo y busque el nombre no con search.
+                                        DoubleListNode nodoTicket = ticketsVuelo.search(nombreActual);
+                                        Ticket ticketActual = (Ticket)nodoTicket.getObject();
+                                        System.out.println(ticketActual.getPas().toString());
+                                        System.out.println("La carga de este pasajero es de: " + ticketActual.getCarga() + "kg\n");
+                                        pn = pn.next;
+                                    }
+
+                                }else if(rep.equals("2")){
+                                    porApellido = porApellido.sortList();
+                                    DoubleListNode pa = porApellido.head;
+                                    for (int j = 0; j < porApellido.getSize(); j++) {
+                                        String apellidoActual = (String) pa.getObject();
+                                        DoubleListNode nodoTicket = ticketsVuelo.search(apellidoActual);
+                                        Ticket ticketActual = (Ticket)nodoTicket.getObject();
+                                        System.out.println(ticketActual.getPas().toString());
+                                        System.out.println("La carga de este pasajero es de: " + ticketActual.getCarga() + "kg\n");
+                                        pa = pa.next;
+                                    }
+                                }
+
+                                n = n.next;
+                            }
+
                             break;
+                        }
+                        case "3":{
+                            /*todo
+                             vuelo 1 y vuelo 2, si antes de abordar el vuelo 1 su ocupación es del 50%
+                             y el siguiente vuelo 2 es del 50%, se deberá reasignar todos los pasajeros
+                             en el vuelo 2 (cualquier parecido con la realidad es pura coincidencia).
+                             Tenga en cuenta que, si un puesto esta ocupado deberá asignarle el siguiente,
+                             si esta ocupado deberá asignar el siguiente, hasta que encuentre uno libre.
+                             En caso de llegar al final de los puestos, deberá ir al primer asiento de su
+                             categoría para continuar con la búsqueda de puesto.
+                             */
                         }
                     }
                     System.out.println("\n");

@@ -12,7 +12,7 @@ public class Vuelo {
     public Calendar horaLlegada;
     public int puestosDisponibles; //133
 
-    public DoubleList pasajeros;
+    public DoubleList tickets = new DoubleList();
 
     public Vuelo(String ciudadSalida, String ciudadLlegada, Calendar horaSalida, Calendar horaLlegada) {
         this.puestosDisponibles = 133;
@@ -91,11 +91,11 @@ public class Vuelo {
         this.puestosDisponibles = puestosDisponibles;
     }
 
-    public DoubleList getPasajeros() {
-        return pasajeros;
+    public DoubleList getTickets() {
+        return tickets;
     }
 
-    public void setPasajeros(DoubleList pasajeros) {
-        this.pasajeros = pasajeros;
+    public void setTickets(DoubleList tickets) {
+        this.tickets = tickets;
     }
 }

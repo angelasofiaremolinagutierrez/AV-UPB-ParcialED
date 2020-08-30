@@ -215,7 +215,7 @@ public class DoubleList implements DoubleListInterface, Iterable<DoubleListNode>
     public Object[] toArray(Object[] array) {
         if (array.length == this.size) {
             DoubleListNode node = this.head;
-            for (int i = 1; i < size; i++) {
+            for (int i = 0; i < size; i++) {
                 array[i] = node.getObject();
                 node = node.next;
             }
