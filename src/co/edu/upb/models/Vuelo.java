@@ -11,6 +11,7 @@ public class Vuelo {
     public Calendar horaSalida;
     public Calendar horaLlegada;
     public int puestosDisponibles; //133
+    public String estado = "Activo";
 
     public DoubleList tickets = new DoubleList();
 
@@ -38,7 +39,8 @@ public class Vuelo {
                 ", Llegada='" + ciudadLlegada + '\'' +
                 ", horaSalida=" + horaSalida.getTime() +
                 ", horaLlegada=" + horaLlegada.getTime() +
-                ", ID Avion=" + idAvion;
+                ", ID Avion=" + idAvion +
+                ", Estado= " + estado;
     }
 
     //getters y setters
@@ -97,5 +99,13 @@ public class Vuelo {
 
     public void setTickets(DoubleList tickets) {
         this.tickets = tickets;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

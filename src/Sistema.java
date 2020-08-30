@@ -8,6 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Scanner;
 
 public class Sistema{
@@ -27,12 +28,20 @@ public class Sistema{
         //creando algunos vuelos
         DoubleList vuelos = new DoubleList();
         //todo crear vuelos reales
-        Vuelo v1 = new Vuelo("Bucaramanga","Bogotá",new GregorianCalendar(2020, Calendar.AUGUST, 30, 15, 59, 44) ,new GregorianCalendar(2020, Calendar.AUGUST, 30, 16, 40, 59));
+        Vuelo v1 = new Vuelo("Bucaramanga","Bogotá",new GregorianCalendar(2020, Calendar.AUGUST, 30, 18, 5, 44) ,new GregorianCalendar(2020, Calendar.AUGUST, 30, 18, 40, 59));
         Vuelo v2 = new Vuelo("Bucaramanga","Cucuta",new GregorianCalendar(2020, Calendar.AUGUST, 31, 23, 11, 44) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 1, 0, 0, 0));
-        v1.setIdAvion(1);
-        v2.setIdAvion(2);
+        Vuelo v3 = new Vuelo("Bucaramanga","Bogotá",new GregorianCalendar(2020, Calendar.AUGUST, 31, 23, 59, 44) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 1, 3, 0, 0));
+
         vuelos.add(v1);
         vuelos.add(v2);
+        vuelos.add(v3);
+
+        //asignar idAvion
+        DoubleListNode vnode = vuelos.head;
+        for (int i = 0; i < vuelos.getSize(); i++) {
+            ((Vuelo)vnode.getObject()).setIdAvion(i+1);
+            vnode = vnode.next;
+        }
 
         //tickets comprados
         DoubleList tickets = new DoubleList();
@@ -296,7 +305,7 @@ public class Sistema{
                             }
                             break;
                         }
-                        case "2":{//El reporte debe contemplar la carga asociada a cada pasajero y los costos detallados y totales del vuelo.
+                        case "2":{//El reporte debe contemplar la carga asociada a cada pasajero y todo los costos detallados y totales del vuelo.
                             System.out.println("Reportes ordenados por: \n" + "1. Nombre\n2. Apellido\n3. ID Avión");
                             String rep = scan.nextLine();
                             //Sin importar que, los vuelos se imprimirán  ordendados por id del avión (opción default)
@@ -373,7 +382,7 @@ public class Sistema{
                             System.out.println("Ingrese el ID del avión del vuelo que quiere reasignar");
                             int idAReasignar = Integer.parseInt(scan.nextLine());
                             DoubleListNode v = vuelos.head;
-                            for (int i = 0; i < idAReasignar; i++) { //encontrar el vuelo con el id que ingresó
+                            for (int i = 0; i < idAReasignar-1; i++) { //encontrar el vuelo con el id que ingresó
                                 v = v.next;
                             }
 
@@ -382,28 +391,46 @@ public class Sistema{
                             long minsParaSalida = (vuelo.getHoraSalida().getTimeInMillis() - rn.getTimeInMillis())/60000;
                             long minsParaLlegada = (vuelo.getHoraLlegada().getTimeInMillis() - rn.getTimeInMillis())/60000;
 
-                            //System.out.println("mins Salida: "+minsParaSalida);
-                            //System.out.println("mins llegada: "+minsParaLlegada);
+                            System.out.println("Minutos restantes para la salida: "+minsParaSalida);
+                            System.out.println("Minutos restantes para la llegada: "+minsParaLlegada+"\n");
 
                             if(minsParaSalida<30 && minsParaSalida>=0){
                                 int numPasajerosVuelo = 133-vuelo.getPuestosDisponibles();
                                 if(numPasajerosVuelo <= 67){ // si la ocupación es del 50% o menos
-                                    // TODO: Checkear que el vuelo siguiente sea para el mismo destino xd luego los manda para otra parte
-                                    /*
-                                     vuelo 1 y vuelo 2, si antes de abordar el vuelo 1 su ocupación es del 50%
-                                     y el siguiente vuelo 2 es del 50%, se deberá reasignar todos los pasajeros
-                                     en el vuelo 2 (cualquier parecido con la realidad es pura coincidencia).
-                                     Tenga en cuenta que, si un puesto esta ocupado deberá asignarle el siguiente,
-                                     si esta ocupado deberá asignar el siguiente, hasta que encuentre uno libre.
-                                     En caso de llegar al final de los puestos, deberá ir al primer asiento de su
-                                     categoría para continuar con la búsqueda de puesto.
-                                     */
-                                    Vuelo siguienteVuelo = ((Vuelo)v.next.getObject());
-                                    if(siguienteVuelo.getPuestosDisponibles() >= numPasajerosVuelo){//si el vuelo siguiente tiene los puestos disponibles para ingresar a los pasajeros de este
-                                        System.out.println("Avise a los pasajeros de este vuelo que serán reasignados");
-                                        //todo reasignar pasajeros
-                                    }else{
-                                        System.out.println("Los pasajeros no caben en el siguiente vuelo, éste deberá salir así");
+                                    while (v.next != null){
+                                        Vuelo siguienteVuelo = ((Vuelo)v.next.getObject());
+                                        String ciudadSalidaNext = siguienteVuelo.getCiudadSalida();
+                                        String ciudadLlegadaNext = siguienteVuelo.getCiudadLlegada();
+                                        if(vuelo.getCiudadLlegada().equals(ciudadLlegadaNext) && vuelo.getCiudadSalida().equals(ciudadSalidaNext)){//Checkear que el vuelo siguiente sea para el mismo destino y misma salida
+                                            if(siguienteVuelo.getPuestosDisponibles() >= numPasajerosVuelo){//si el vuelo siguiente tiene los puestos disponibles para ingresar a los pasajeros de este
+                                                System.out.println("Avise a los pasajeros de este vuelo que se canceló y que serán reasignados al vuelo del avión de id numero: "+siguienteVuelo.getIdAvion());
+                                                System.out.println("Se imprimirán los nuevos ticketes de todos los pasajeros aquí:");
+                                                System.out.println("v--------------------------------------v");
+                                                //reasignar todos los pasajeros al nuevo vuelo
+                                                DoubleList ticketsVuelo = vuelo.getTickets();
+                                                DoubleListNode nodetick = tickets.head;
+                                                for (int i = 0; i < ticketsVuelo.getSize(); i++) {
+                                                    Ticket ticketViejo = ((Ticket)nodetick.getObject());
+                                                    Pasajero pasActual = ticketViejo.getPas();
+                                                    Ticket tickNuevo = new Ticket(pasActual);
+                                                    tickNuevo.comprar(siguienteVuelo,pasActual, ticketViejo.getCarga(),ticketViejo.getCategoria());
+                                                    tickets.add(tickNuevo);
+                                                    nodetick = nodetick.next;
+                                                    System.out.println("\n...............................\n");
+                                                }
+                                                vuelo.setEstado("Cancelado"); //cancelar el vuelo
+                                                System.out.println("^--------------------------------------^");
+
+                                            }else{
+                                                System.out.println("Los pasajeros no caben en el siguiente vuelo, éste deberá salir así");
+                                            }
+                                            break;
+                                        }else{
+                                            v = v.next;
+                                        }
+                                    }
+                                    if(v.next == null){
+                                        System.out.println("No hay vuelos para el mismo destino disponibles.");
                                     }
                                 }else{
                                     System.out.println("Este avión está ocupado a más de 50%");
@@ -411,6 +438,8 @@ public class Sistema{
                                 }
                             }else if(minsParaLlegada <=0){
                                 System.out.println("Este vuelo ya cerró. Ya llegó a su destino.");
+                            }else if(minsParaSalida<=0 && minsParaLlegada>0){
+                                System.out.println("Este vuelo ya despegó.");
                             }else{
                                 System.out.println("Faltan más de 30 minutos para el abordaje, aun no se puede hacer esta comprobación ya que no todos los pasajeros han hecho su check-in.");
                             }
