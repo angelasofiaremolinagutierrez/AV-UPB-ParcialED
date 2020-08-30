@@ -19,6 +19,11 @@ public class Sistema{
         pas1.registrarse("Angela","Remolina","CC", pas1.numeroID, "Cra.15","3188334099","Maria","Remolina","Calle 12","3188334095");
         pasajeros.add(pas1);
 
+        Pasajero pas2 = new Pasajero("123");
+        pas2.setIdPasajero(pasajeros.getSize()+1);
+        pas2.registrarse("ABC","XYZ","CC", pas1.numeroID, "Cra.X","318","alguien","X","Calle X","456");
+        pasajeros.add(pas2);
+
         //creando algunos vuelos
         DoubleList vuelos = new DoubleList();
         //todo crear vuelos reales
@@ -364,15 +369,38 @@ public class Sistema{
                             break;
                         }
                         case "3":{
-                            /*todo
-                             vuelo 1 y vuelo 2, si antes de abordar el vuelo 1 su ocupación es del 50%
-                             y el siguiente vuelo 2 es del 50%, se deberá reasignar todos los pasajeros
-                             en el vuelo 2 (cualquier parecido con la realidad es pura coincidencia).
-                             Tenga en cuenta que, si un puesto esta ocupado deberá asignarle el siguiente,
-                             si esta ocupado deberá asignar el siguiente, hasta que encuentre uno libre.
-                             En caso de llegar al final de los puestos, deberá ir al primer asiento de su
-                             categoría para continuar con la búsqueda de puesto.
-                             */
+                            //Los vuelos están ordenados por hora de salida
+                            DoubleListNode v = vuelos.head;
+                            int cont = 0;
+                            for (int i = 0; i < vuelos.getSize(); i++) {
+                                System.out.println("Vuelo "+(i+1)+":\n");
+                                Calendar rn = Calendar.getInstance();
+                                Vuelo vuelo = (Vuelo)v.getObject();
+                                long minsParaSalida = (vuelo.getHoraSalida().getTimeInMillis() - rn.getTimeInMillis())/60000;
+                                long minsParaLlegada = (vuelo.getHoraLlegada().getTimeInMillis() - rn.getTimeInMillis())/60000;
+
+                                //System.out.println("mins Salida: "+minsParaSalida);
+                                //System.out.println("mins llegada: "+minsParaLlegada);
+
+                                if(minsParaSalida<30 && minsParaSalida>=0){
+                                    //hacer el resto aqui
+                                    /*todo
+                                     vuelo 1 y vuelo 2, si antes de abordar el vuelo 1 su ocupación es del 50%
+                                     y el siguiente vuelo 2 es del 50%, se deberá reasignar todos los pasajeros
+                                     en el vuelo 2 (cualquier parecido con la realidad es pura coincidencia).
+                                     Tenga en cuenta que, si un puesto esta ocupado deberá asignarle el siguiente,
+                                     si esta ocupado deberá asignar el siguiente, hasta que encuentre uno libre.
+                                     En caso de llegar al final de los puestos, deberá ir al primer asiento de su
+                                     categoría para continuar con la búsqueda de puesto.
+                                     */
+                                }else if(minsParaLlegada <=0){
+                                    System.out.println("Este vuelo ya cerró. Ya llegó a su destino.");
+                                }else{
+                                    System.out.println("Faltan más de 30 minutos para el abordaje, aun no se puede hacer esta comprobación");
+                                }
+                                System.out.println("------------------------");
+                                v = v.next;
+                            }
                         }
                     }
                     System.out.println("\n");
