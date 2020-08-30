@@ -324,9 +324,15 @@ public class Sistema{
                                     DoubleListNode pn = porNombre.head;
                                     for (int j = 0; j < porNombre.getSize(); j++) {
                                         String nombreActual = (String) pn.getObject();
-                                        //todo fix recorra ticketsVuelo y busque el nombre no con search.
-                                        DoubleListNode nodoTicket = ticketsVuelo.search(nombreActual);
+                                        DoubleListNode nodoTicket = ticketsVuelo.head;
                                         Ticket ticketActual = (Ticket)nodoTicket.getObject();
+                                        for (int k = 0; k < ticketsVuelo.getSize(); k++) {
+                                            ticketActual = (Ticket)nodoTicket.getObject();
+                                            if((ticketActual.getPas().getNombre()).equals(nombreActual)){
+                                                break;
+                                            }
+                                            nodoTicket = nodoTicket.next;
+                                        }
                                         System.out.println(ticketActual.getPas().toString());
                                         System.out.println("La carga de este pasajero es de: " + ticketActual.getCarga() + "kg\n");
                                         pn = pn.next;
@@ -337,8 +343,15 @@ public class Sistema{
                                     DoubleListNode pa = porApellido.head;
                                     for (int j = 0; j < porApellido.getSize(); j++) {
                                         String apellidoActual = (String) pa.getObject();
-                                        DoubleListNode nodoTicket = ticketsVuelo.search(apellidoActual);
+                                        DoubleListNode nodoTicket = ticketsVuelo.head;
                                         Ticket ticketActual = (Ticket)nodoTicket.getObject();
+                                        for (int k = 0; k < ticketsVuelo.getSize(); k++) {
+                                            ticketActual = (Ticket)nodoTicket.getObject();
+                                            if((ticketActual.getPas().getNombre()).equals(apellidoActual)){
+                                                break;
+                                            }
+                                            nodoTicket = nodoTicket.next;
+                                        }
                                         System.out.println(ticketActual.getPas().toString());
                                         System.out.println("La carga de este pasajero es de: " + ticketActual.getCarga() + "kg\n");
                                         pa = pa.next;
