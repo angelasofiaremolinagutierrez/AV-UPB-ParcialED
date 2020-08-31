@@ -38,7 +38,6 @@ public class Sistema{
         vuelos.add(v4);
         vuelos.add(v5);
 
-        //tickets comprados
         //asignar idAvion
         DoubleListNode vnode = vuelos.head;
         for (int i = 0; i < vuelos.getSize(); i++) {
@@ -46,6 +45,7 @@ public class Sistema{
             vnode = vnode.next;
         }
 
+        //tickets comprados
         DoubleList tickets = new DoubleList();
 
         //INICIO DEL PROGRAMA
@@ -305,7 +305,7 @@ public class Sistema{
                             }
                             break;
                         }
-                        case "2":{//El reporte debe contemplar la carga asociada a cada pasajero y 1los costos detallados y totales del vuelo.
+                        case "2":{//El reporte debe contemplar la carga asociada a cada pasajero y los costos detallados y totales del vuelo.
                             System.out.println("Reportes ordenados por: \n" + "1. Nombre\n2. Apellido\n3. ID Avión");
                             String rep = scan.nextLine();
                             //Sin importar que, los vuelos se imprimirán  ordendados por id del avión (opción default)
