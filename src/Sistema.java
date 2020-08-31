@@ -20,22 +20,25 @@ public class Sistema{
         pas1.registrarse("Angela","Remolina","CC", pas1.numeroID, "Cra.15","3188334099","Maria","Remolina","Calle 12","3188334095");
         pasajeros.add(pas1);
 
-        Pasajero pas2 = new Pasajero("123");
+        Pasajero pas2 = new Pasajero("123456789");
         pas2.setIdPasajero(pasajeros.getSize()+1);
-        pas2.registrarse("ABC","XYZ","CC", pas1.numeroID, "Cra.X","318","alguien","X","Calle X","456");
+        pas2.registrarse("Alberto","Zapata","CE", pas2.numeroID, "Cra.X","3151234567","Luis","Diaz","Calle 10","3127890456");
         pasajeros.add(pas2);
 
         //creando algunos vuelos
         DoubleList vuelos = new DoubleList();
-        //todo crear vuelos reales
         Vuelo v1 = new Vuelo("Bucaramanga","Bogotá",new GregorianCalendar(2020, Calendar.AUGUST, 30, 18, 5, 44) ,new GregorianCalendar(2020, Calendar.AUGUST, 30, 18, 40, 59));
-        Vuelo v2 = new Vuelo("Bucaramanga","Cucuta",new GregorianCalendar(2020, Calendar.AUGUST, 31, 23, 11, 44) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 1, 0, 0, 0));
-        Vuelo v3 = new Vuelo("Bucaramanga","Bogotá",new GregorianCalendar(2020, Calendar.AUGUST, 31, 23, 59, 44) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 1, 3, 0, 0));
-
+        Vuelo v2 = new Vuelo("Bogotá","Cucuta",new GregorianCalendar(2020, Calendar.SEPTEMBER, 2, 16, 0, 0) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 2, 16, 32, 0));
+        Vuelo v3 = new Vuelo("Bucaramanga","Bogotá",new GregorianCalendar(2020, Calendar.SEPTEMBER, 5, 23, 59, 44) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 6, 0, 34, 0));
+        Vuelo v4 = new Vuelo("Bucaramanga","Cucuta",new GregorianCalendar(2020, Calendar.SEPTEMBER, 9, 10, 19, 24) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 9, 10, 50, 0));
+        Vuelo v5 = new Vuelo("Cucuta","Bogotá",new GregorianCalendar(2020, Calendar.SEPTEMBER, 13, 13, 13, 13) ,new GregorianCalendar(2020, Calendar.SEPTEMBER, 13, 14, 0, 0));
         vuelos.add(v1);
         vuelos.add(v2);
         vuelos.add(v3);
+        vuelos.add(v4);
+        vuelos.add(v5);
 
+        //tickets comprados
         //asignar idAvion
         DoubleListNode vnode = vuelos.head;
         for (int i = 0; i < vuelos.getSize(); i++) {
@@ -43,11 +46,7 @@ public class Sistema{
             vnode = vnode.next;
         }
 
-        //tickets comprados
         DoubleList tickets = new DoubleList();
-        Ticket prueba = new Ticket(pas1);
-        prueba.comprar(v1,pas1,58,3);
-        tickets.add(prueba);
 
         //INICIO DEL PROGRAMA
         System.out.println("Bienvenido a la aerolinea AV-UPB!");
@@ -96,6 +95,7 @@ public class Sistema{
                                     break;
                                 }
                                 contUser++;
+                                p = p.next;
                             }
                             if(contUser == pasajeros.getSize()) {
                                 System.out.println("Parece que usted no se encuentra en el sistema.");
@@ -305,13 +305,13 @@ public class Sistema{
                             }
                             break;
                         }
-                        case "2":{//El reporte debe contemplar la carga asociada a cada pasajero y todo los costos detallados y totales del vuelo.
+                        case "2":{//El reporte debe contemplar la carga asociada a cada pasajero y 1los costos detallados y totales del vuelo.
                             System.out.println("Reportes ordenados por: \n" + "1. Nombre\n2. Apellido\n3. ID Avión");
                             String rep = scan.nextLine();
                             //Sin importar que, los vuelos se imprimirán  ordendados por id del avión (opción default)
                             DoubleListNode n = vuelos.head;
                             for (int i = 0; i < vuelos.getSize(); i++) {
-                                System.out.println("------------VUELO " + (i + 1) + "-------------");
+                                System.out.println("--------------------VUELO " + (i + 1) + "---------------------");
                                 System.out.println("Información del vuelo:");
                                 System.out.println(((Vuelo) n.getObject()).toString());
                                 DoubleList ticketsVuelo = ((Vuelo) n.getObject()).getTickets();
@@ -320,17 +320,22 @@ public class Sistema{
                                 DoubleList porNombre = new DoubleList();
                                 DoubleList porApellido = new DoubleList();
                                 DoubleListNode t = ticketsVuelo.head;
+                                int precioTotal = 0;
                                 for (int j = 0; j < ticketsVuelo.getSize(); j++) {
                                     Ticket ticketActual = (Ticket)t.getObject();
+
+                                    int precio = ticketActual.getPrecio();
+                                    System.out.println("El precio del siguiente ticket es de: "+precio);
+                                    precioTotal += precio;
+
                                     if(rep.equals("3")){
                                         System.out.println(ticketActual.getPas().toString());
                                         System.out.println("La carga de este pasajero es de: "+ ticketActual.getCarga()+"kg\n");
                                     }else if(rep.equals("2")){
-                                        porApellido.add(ticketActual.getPas().getApellido());
+                                        porApellido.add(ticketActual.getPas().getApellido().toLowerCase());
                                     }else if(rep.equals("1")){
-                                        porNombre.add(ticketActual.getPas().getNombre());
+                                        porNombre.add(ticketActual.getPas().getNombre().toLowerCase());
                                     }
-
                                     t = t.next;
                                 }
                                 if(rep.equals("1")){
@@ -342,7 +347,7 @@ public class Sistema{
                                         Ticket ticketActual = (Ticket)nodoTicket.getObject();
                                         for (int k = 0; k < ticketsVuelo.getSize(); k++) {
                                             ticketActual = (Ticket)nodoTicket.getObject();
-                                            if((ticketActual.getPas().getNombre()).equals(nombreActual)){
+                                            if((ticketActual.getPas().getNombre().toLowerCase()).equals(nombreActual)){
                                                 break;
                                             }
                                             nodoTicket = nodoTicket.next;
@@ -361,7 +366,7 @@ public class Sistema{
                                         Ticket ticketActual = (Ticket)nodoTicket.getObject();
                                         for (int k = 0; k < ticketsVuelo.getSize(); k++) {
                                             ticketActual = (Ticket)nodoTicket.getObject();
-                                            if((ticketActual.getPas().getNombre()).equals(apellidoActual)){
+                                            if((ticketActual.getPas().getApellido().toLowerCase()).equals(apellidoActual)){
                                                 break;
                                             }
                                             nodoTicket = nodoTicket.next;
@@ -371,6 +376,14 @@ public class Sistema{
                                         pa = pa.next;
                                     }
                                 }
+
+                                if(ticketsVuelo.getSize() == 0){
+                                    System.out.println("\nNo hay tickets comprados para este vuelo.");
+                                }
+                                System.out.println("\n ...................................");
+                                System.out.println("Los costos totales asociados a este vuelo son de: "+precioTotal);
+                                System.out.println(" ...................................\n");
+
 
                                 n = n.next;
                             }
@@ -415,6 +428,7 @@ public class Sistema{
                                                     Ticket tickNuevo = new Ticket(pasActual);
                                                     tickNuevo.comprar(siguienteVuelo,pasActual, ticketViejo.getCarga(),ticketViejo.getCategoria());
                                                     tickets.add(tickNuevo);
+
                                                     nodetick = nodetick.next;
                                                     System.out.println("\n...............................\n");
                                                 }
